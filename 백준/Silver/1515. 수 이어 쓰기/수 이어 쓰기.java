@@ -13,7 +13,8 @@ public class Main {
 
         int start = 0;
         int idx = 0;
-        while(start++<=30000){
+        while(true){
+            start++;
             String temp = String.valueOf(start);
             for(int i = 0; i<temp.length(); i++){
                 if(word.charAt(idx) == temp.charAt(i)){
