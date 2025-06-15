@@ -10,7 +10,7 @@ class Solution {
                 aw+=num.charAt(i);
             }else{
                 if(!aw.equals("")){
-                    long nums = Long.parseLong(aw);
+                    Long nums = Long.parseLong(aw);
                     if(CheckSosu(nums)){
                         answer++;
                     }
@@ -21,7 +21,7 @@ class Solution {
         
         //마지막 처리
         if (!aw.equals("")) {
-            long nums = Long.parseLong(aw);
+            Long nums = Long.parseLong(aw);
             if (CheckSosu(nums)) {
                 answer++;
             }
@@ -31,7 +31,7 @@ class Solution {
     }
     
     //소수 판별 
-    public boolean CheckSosu(long num){
+    public boolean CheckSosu(Long num){
         if(num<=1){
             return false;
         }
