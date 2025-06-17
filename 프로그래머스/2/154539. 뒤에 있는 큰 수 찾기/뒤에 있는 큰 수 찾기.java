@@ -1,18 +1,19 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] numbers) {
-        int n = numbers.length;
+        
+        int idx = 0; 
+        int last = numbers.length;
+        int[] answer = new int[last];
         Stack<Integer> stack = new Stack<>();
-        int[] answer = new int[n];
-        for(int i = 0; i<numbers.length; i++){
+        for(int i = 0; i<last; i++){
             
-            while(!stack.isEmpty() && numbers[stack.peek()]<numbers[i]){
+            while(!stack.isEmpty() && numbers[stack.peek()] < numbers[i]){
                 answer[stack.pop()] = numbers[i];
             }
             stack.push(i);
-            
         }
-        for(int i = 0; i<n; i++){
+        for(int i = 0; i<last; i++){
             if(answer[i] == 0){
                 answer[i] = -1;
             }
