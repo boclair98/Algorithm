@@ -20,14 +20,12 @@ public class Main {
 
     private static void DFS(int idx, int n, int k, List<Integer> list, boolean[] visited) {
         if(idx == k){
-            String answer ="";
+            StringBuilder sb = new StringBuilder();
             for (Integer number : box) {
-                answer+=number+"";
+                sb.append(number);
             }
-            int num = Integer.parseInt(answer);
-            if(!set.contains(num)){
-                set.add(num);
-            }
+            int num = Integer.parseInt(sb.toString());
+            set.add(num);
             return;
         }
         for(int i = 0; i<n; i++){
