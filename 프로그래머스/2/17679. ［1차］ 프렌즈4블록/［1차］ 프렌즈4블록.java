@@ -1,11 +1,15 @@
 import java.util.*;
 class Solution {
+    // 아래, 대각선, 옆 dx,dy
     static int[] dx = {1,0,1};
     static int[] dy = {0,1,1};
+    
+    //2*2 터지는 좌표 값 추가.
     static Queue<int[]> queue = new ArrayDeque<>();
     
     public int solution(int n, int m, String[] board) {
         int answer = 0;
+        
         //2차원 배열로 구분
         String[][] maps = new String[n][m];
         
@@ -18,19 +22,22 @@ class Solution {
         //2*2 시작점을 찾고 queue에 추가
         while(true){
             queue.clear();
-            boolean same = false;
+            boolean bomb = false;
             for(int i = 0; i<n-1; i++){
                 for(int j = 0; j<m-1; j++){
                     if(maps[i][j].equals(maps[i+1][j]) && !maps[i][j].equals(" ")){
                         if(maps[i][j].equals(maps[i][j+1])){
                             if(maps[i][j].equals(maps[i+1][j+1])){
                                 queue.add(new int[]{i,j});
-                                same = true;
+                                bomb = true;
                             // System.out.println(i+" "+j);
                         }
                     }
                 }
             }
+        }
+        if(!bomb){
+            break;
         }
         
         //BFS 시작 
@@ -46,11 +53,7 @@ class Solution {
                     maps[nx][ny] = " ";
                 }
             }
-            if(!same){
-                break;
-            }else{
-                change(n,m,maps);
-            }
+            change(n,m,maps);
         }
         
         for(int i = 0; i<n; i++){
@@ -58,16 +61,17 @@ class Solution {
                 if(maps[i][j].equals(" ")){
                     answer++;
                 }
-                System.out.print(maps[i][j]+"");
+                // System.out.print(maps[i][j]+"");
             }
-            System.out.println();
+            // System.out.println();
         }
         return answer;
     }
     
+    //밑에서 위로 불록 체인지 함수 
     private static void change(int n, int m, String[][] maps){
-    for (int j = 0; j < m; j++) { // 열 기준
-        for (int i = n - 1; i >= 0; i--) { // 아래에서 위로
+    for (int j = 0; j < m; j++) { 
+        for (int i = n - 1; i >= 0; i--) {
             if (maps[i][j].equals(" ")) {
                 for (int k = i - 1; k >= 0; k--) {
                     if (!maps[k][j].equals(" ")) {
