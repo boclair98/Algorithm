@@ -1,4 +1,7 @@
 import java.util.*;
+
+//numbers에 있는 값 정렬
+// 맨 앞자리 -> 뒷자리 순으로 정렬
 class Solution {
     
     public String solution(int[] numbers) {
