@@ -17,6 +17,7 @@ class Solution {
             // System.out.println(total);
             if(total == k){
                 if(right - left < distance){
+                    answer.clear();
                     distance = right - left;
                     answer.add(left);
                     answer.add(right);
@@ -24,10 +25,6 @@ class Solution {
             }
             right++;
         }
-        List<Integer> l = new ArrayList<>();
-        l.add(answer.get(answer.size()-2));
-        l.add(answer.get(answer.size()-1));
-        
-        return l;
+        return answer;
     }
 }
