@@ -1,33 +1,36 @@
 import java.util.*;
-
 class Solution {
     public int solution(String[][] book_time) {
-        Arrays.sort(book_time, (a, b) -> a[0].compareTo(b[0]));
-
+        int answer = 0;
+        Arrays.sort(book_time,(a,b) -> a[0].compareTo(b[0]));
+        //시간 저장
         List<Integer> time = new ArrayList<>();
-
-        for (int i = 0; i < book_time.length; i++) {
-            int start = time_change(book_time[i][0]);
-            int finish = time_change(book_time[i][1]) + 10;
-
-            boolean assigned = false;
-            for (int j = 0; j < time.size(); j++) {
-                if (start >= time.get(j)) {
-                    time.set(j, finish);  // 기존 방 재사용!
-                    assigned = true;
+        
+       
+        for(int i = 0; i<book_time.length; i++){
+            String[] num = book_time[i];
+            int start = time_change(num[0]);
+            int finish = time_change(num[1])+10;
+            
+            boolean check = false;
+            for(int j = 0; j<time.size(); j++){
+                if(start >= time.get(j)){
+                    time.set(j,finish);
+                    check = true;
                     break;
                 }
             }
-
-            if (!assigned) {
-                time.add(finish);  // 새로운 방 추가
+                
+            if(!check){
+                time.add(finish);
             }
         }
-
-        return time.size();  // 필요한 방 개수
+        
+        
+        return time.size();
     }
-
-    public static int time_change(String t) {
+    
+    public static int time_change(String t){
         String[] num = t.split(":");
         return Integer.parseInt(num[0]) * 60 + Integer.parseInt(num[1]);
     }
