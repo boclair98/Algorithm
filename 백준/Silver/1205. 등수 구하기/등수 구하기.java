@@ -1,29 +1,43 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main {
-    public static void main (String[]args){
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        int new_score = scanner.nextInt();
-        int p = scanner.nextInt();  //랭킹 리스트에 오를 수 있는 갯수.
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+class Main {
 
-        Integer[] arr = new Integer[n];
-        for(int i=0; i<n; i++){
-            arr[i] = scanner.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        if(n == 0){
+            System.out.println(1);
+            return;
         }
-        Arrays.sort(arr, Collections.reverseOrder());
-
-        if(n == p && new_score <= arr[arr.length-1])
-            System.out.print(-1);
-        else{
-            int rank = 1;
-            for(int i=0; i<arr.length; i++){
-                if(new_score < arr[i])
-                    rank++;
-                else
-                    break;
+        Long score = Long.parseLong(st.nextToken());
+        int p = Integer.parseInt(st.nextToken());
+        List<Long> num = new ArrayList<>();
+        st = new StringTokenizer(br.readLine());
+        for(int i = 0; i<n; i++){
+            num.add(Long.parseLong(st.nextToken()));
+        }
+        Collections.sort(num,Collections.reverseOrder());
+        int rank = 1;
+        for(int i = 0; i<num.size(); i++){
+            if(score < num.get(i)){
+                rank++;
+            }else{
+                break;
             }
-            System.out.print(rank);
         }
+
+        if(n == p && score <= num.get(num.size()-1)){
+            System.out.println(-1);
+        }else{
+            System.out.println(rank);
+        }
+
+
     }
 }
