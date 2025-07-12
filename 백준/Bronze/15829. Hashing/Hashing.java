@@ -18,8 +18,10 @@ public class Main {
         }
 //        System.out.println(map);
         long total = 0;
+        long pow = 1;
         for(int i = 0; i<n; i++){
-            total+=map.get(input.charAt(i)+"")*((long) Math.pow(31,i));
+            total = (total + map.get(input.charAt(i)+"") * pow) % 1234567891;
+            pow = (pow * 31 ) % 1234567891;
 //            System.out.println(map.get(alpha.charAt(i)+""));
         }
         System.out.println(total);
