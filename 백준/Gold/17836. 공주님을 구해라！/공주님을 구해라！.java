@@ -3,8 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 class Main {
     static int n, m, t,sword;
     static boolean[][][]visited;
@@ -58,11 +57,11 @@ class Main {
                         visited[nx][ny][0] = true;
                     }else if(!visited[nx][ny][0] && maps[nx][ny] == 2){
                         q.offer(new int[]{nx,ny,1,count+1});
-                        visited[nx][ny][0] = true;
+                        visited[nx][ny][1] = true;
                     }
                 }else{
                     if(!visited[nx][ny][1]){
-                        q.offer(new int[]{nx,ny,sword,count+1});
+                        q.offer(new int[]{nx,ny,1,count+1});
                         visited[nx][ny][1] = true;
                     }
                 }
