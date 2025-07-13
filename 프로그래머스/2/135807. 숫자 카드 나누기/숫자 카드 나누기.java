@@ -11,27 +11,34 @@ class Solution {
             gcdB = gcd(gcdB, arrayB[i]);
         }
 
-        boolean isAGood = true;
-        boolean isBGood = true;
-
-        // gcdA가 영희 카드들을 하나라도 나누면 안 됨
-        for (int i = 0; i < n; i++) {
-            if (arrayB[i] % gcdA == 0) {
-                isAGood = false;
+        boolean Acheck = true;
+        boolean Bcheck = true;
+        
+        //철수 상태 확인
+        //영희걸로 나누어 떨어지면 false
+        for(int i = 0; i<n; i++){
+            if(arrayA[i] % gcdB == 0){
+                Bcheck = false;
                 break;
             }
         }
-
-        // gcdB가 철수 카드들을 하나라도 나누면 안 됨
-        for (int i = 0; i < n; i++) {
-            if (arrayA[i] % gcdB == 0) {
-                isBGood = false;
+        
+        //영희 상태 확인
+        //철수걸로 나누어 떨어지면 false
+        for(int i = 0; i<n; i++){
+            if(arrayB[i] % gcdA == 0){
+                Acheck = false;
                 break;
             }
         }
-
-        if (isAGood) answer = Math.max(answer, gcdA);
-        if (isBGood) answer = Math.max(answer, gcdB);
+        
+        if(Acheck){
+            answer = Math.max(answer,gcdA);
+        }
+        if(Bcheck){
+            answer = Math.max(answer,gcdB);
+        }
+        
 
         return answer;
     }
