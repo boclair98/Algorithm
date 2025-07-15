@@ -43,16 +43,6 @@ class Solution {
         return answer;
     }
     
-    //숫자 함수
-    // private static boolean isNumeric(String num){
-    //     for(Character c : num.toCharArray()){
-    //         if(!Character.isDigit(c)){
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-    
     //BFS탐색.
     private static void BFS(int s,int d){
         Queue<int[]> q = new ArrayDeque<>();
