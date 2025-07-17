@@ -1,7 +1,6 @@
 //우선 처음에 확인을해줌 올바른 괄호 문자열인지.
 import java.util.*;
 class Solution {
-    static StringBuilder sb = new StringBuilder();
     public String solution(String p) {
         String answer = "";
         boolean check = true;
@@ -41,17 +40,18 @@ class Solution {
        if(check(u.toString())){
            return u.toString()+dfs(v.toString());
        }else{
-           String word = "(" + dfs(v.toString())+")";
-           String word2 ="";
+           StringBuilder word = new StringBuilder();
+           StringBuilder word2 = new StringBuilder();
+           word.append("(").append(dfs(v.toString())).append(")");
            for(int i = 1; i<u.length()-1; i++){
                if(u.charAt(i) ==')'){
-                   word2+="(";
+                   word2.append("(");
                }else{
-                   word2+=")";
+                   word2.append(")");
                }
            }
-           word+=word2;
-           return word;
+           word.append(word2);
+           return word.toString();
        }
         
     
