@@ -1,55 +1,57 @@
 import java.util.*;
 
 class Solution {
-    public List<Integer> solution(int rows, int columns, int[][] queries) {
-        List<Integer> answer = new ArrayList<>();
-        int[][] map = new int[rows][columns];
-        int count = 1;
+    public int[] solution(int rows, int columns, int[][] queries) {
+        int[][] matrix = new int[rows][columns];
+        int cnt = 1;
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < columns; j++)
+                matrix[i][j] = cnt++;
 
-        // 1부터 차례대로 초기화
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                map[i][j] = count++;
-            }
+        int[] answer = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            answer[i] = rotate(matrix, queries[i]);
         }
-
-        for (int[] query : queries) {
-            int x1 = query[0] - 1;
-            int y1 = query[1] - 1;
-            int x2 = query[2] - 1;
-            int y2 = query[3] - 1;
-
-            int temp = map[x1][y1]; // 시작점 값 보관
-            int min = temp;
-
-            // 1. 왼쪽 (위 → 아래)
-            for (int x = x1; x < x2; x++) {
-                map[x][y1] = map[x + 1][y1];
-                min = Math.min(min, map[x][y1]);
-            }
-
-            // 2. 아래쪽 (왼 → 오)
-            for (int y = y1; y < y2; y++) {
-                map[x2][y] = map[x2][y + 1];
-                min = Math.min(min, map[x2][y]);
-            }
-
-            // 3. 오른쪽 (아래 → 위)
-            for (int x = x2; x > x1; x--) {
-                map[x][y2] = map[x - 1][y2];
-                min = Math.min(min, map[x][y2]);
-            }
-
-            // 4. 위쪽 (오 → 왼)
-            for (int y = y2; y > y1 + 1; y--) {
-                map[x1][y] = map[x1][y - 1];
-                min = Math.min(min, map[x1][y]);
-            }
-
-            map[x1][y1 + 1] = temp; // 저장해둔 값 복구
-            answer.add(min);
-        }
-
         return answer;
+    }
+
+    // 시계 방향으로 1칸 회전시키고, 이동된 숫자 중 최솟값을 반환
+    private int rotate(int[][] m, int[] q) {
+        int x1 = q[0] - 1, y1 = q[1] - 1;
+        int x2 = q[2] - 1, y2 = q[3] - 1;
+
+        int prev = m[x1][y1];
+        int min = prev;
+
+        // → 방향 (윗변)
+        for (int j = y1 + 1; j <= y2; j++) {
+            int tmp = m[x1][j];
+            m[x1][j] = prev;
+            prev = tmp;
+            min = Math.min(min, prev);
+        }
+        // ↓ 방향 (오른쪽변)
+        for (int i = x1 + 1; i <= x2; i++) {
+            int tmp = m[i][y2];
+            m[i][y2] = prev;
+            prev = tmp;
+            min = Math.min(min, prev);
+        }
+        // ← 방향 (아랫변)
+        for (int j = y2 - 1; j >= y1; j--) {
+            int tmp = m[x2][j];
+            m[x2][j] = prev;
+            prev = tmp;
+            min = Math.min(min, prev);
+        }
+        // ↑ 방향 (왼쪽변)
+        for (int i = x2 - 1; i >= x1; i--) {
+            int tmp = m[i][y1];
+            m[i][y1] = prev;
+            prev = tmp;
+            min = Math.min(min, prev);
+        }
+
+        return min;
     }
 }
