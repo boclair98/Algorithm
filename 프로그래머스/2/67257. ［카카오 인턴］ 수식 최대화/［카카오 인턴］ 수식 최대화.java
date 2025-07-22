@@ -3,6 +3,7 @@ import java.util.*;
 class Solution {
     public long solution(String expression) {
         long answer = 0;
+        //6가지 순위가 나옴
         String[] s = new String[]{"*+-","*-+","+-*","+*-","-+*","-*+"};
         for(int i = 0 ; i < 6 ; i++){
             String cal = s[i];
@@ -22,34 +23,34 @@ class Solution {
             list.add(sb.toString());
             
             //더하기 빼기 곱하기 3가지만 있기 때문에
-            for (int idx = 0; idx < 3; idx++) {
-                String c = cal.charAt(idx) + "";
-
-                int j = 0;
-                while (j < list.size()) {
-                    if (list.get(j).equals(c)) {
-                        long num1 = Long.parseLong(list.get(j - 1));
-                        long num2 = Long.parseLong(list.get(j + 1));
-                        long cals = 0;
-
-                        if (c.equals("+")) {
-                            cals = num1 + num2;
-                        } else if (c.equals("-")) {
-                            cals = num1 - num2;
-                        } else {
-                            cals = num1 * num2;
+            for(int idx = 0; idx < 3; idx++){
+                String formula = cal.charAt(idx)+"";
+                // System.out.println(formula);
+                int count = 0;
+                while(count < list.size()){
+                    if(list.get(count).equals(formula)){
+                        long num1 = Long.parseLong(list.get(count-1));
+                        long num2 = Long.parseLong(list.get(count+1));
+                        if(formula.equals("+")){
+                            list.set(count-1,String.valueOf(num1+num2));
+                        }else if(formula.equals("-")){
+                            list.set(count-1,String.valueOf(num1-num2));
+                        }else{
+                            list.set(count-1,String.valueOf(num1*num2));
                         }
-
-                        list.set(j - 1, String.valueOf(cals));
-                        list.remove(j); // 연산자
-                        list.remove(j); // 다음 숫자
-                        j = 0; // 리스트가 변경됐으므로 처음부터 다시 탐색
+                        //계산후 계산했던 수식과 숫자는 지워줌.
+                        list.remove(count);
+                        list.remove(count);
                         System.out.println(list);
-                    } else {
-                        j++;
-                        }
+                        //count 초기화 후 계속 수식있을 때 까지 넣어줌.
+                        count = 0;
+                    }else{
+                        count++;
                     }
+                    
                 }
+            }
+            //남은 숫자가 결과인데 최대값 비교
             long number = Long.parseLong(list.get(0));
             answer = Math.max(answer,Math.abs(number));
             // System.out.println(list);
