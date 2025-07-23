@@ -1,48 +1,44 @@
 import java.util.*;
-
 class Solution {
-    int min = Integer.MAX_VALUE;
-
-    // 피로도 테이블
-    int[][] fatigue = {
-        {1, 1, 1},     // 다이아 곡괭이
-        {5, 1, 1},     // 철 곡괭이
-        {25, 5, 1}     // 돌 곡괭이
-    };
-
+    static int min = Integer.MAX_VALUE;
     public int solution(int[] picks, String[] minerals) {
-        dfs(0, 0, picks, minerals);
+        int answer = 0; 
+        int count = picks[0] + picks[1] + picks[2];
+        dfs(0,picks,minerals,0,count);
         return min;
     }
-
-    void dfs(int idx, int totalPiro, int[] picks, String[] minerals) {
-        if (idx >= minerals.length || Arrays.stream(picks).sum() == 0) {
-            min = Math.min(min, totalPiro);
+    static void dfs(int idx, int[] picks, String[] minerals, int total,int count){
+        if(idx >= minerals.length || count == 0 ){
+            min = Math.min(min,total);
             return;
         }
-
-        for (int i = 0; i < 3; i++) {
-            if (picks[i] > 0) {
-                picks[i]--;
-
-                int temp = 0;
-                for (int j = idx; j < idx + 5 && j < minerals.length; j++) {
-                    int m = getMineralIndex(minerals[j]);
-                    temp += fatigue[i][m];
+        for(int i = 0; i<3; i++){
+            if(picks[i] > 0 ){
+                int piro = 0;
+                for(int j = idx; j < idx + 5 && j < minerals.length; j++){
+                    String mineral = minerals[j];
+                    if(i == 0){
+                        piro+=1;
+                    }else if(i == 1){
+                        if(mineral.equals("diamond")){
+                            piro+=5;
+                        }else{
+                            piro+=1;
+                        }
+                    }else{
+                        if(mineral.equals("diamond")){
+                            piro+=25;
+                        }else if(mineral.equals("iron")){
+                            piro+=5;
+                        }else{
+                            piro+=1;
+                        }
+                    }
                 }
-
-                dfs(idx + 5, totalPiro + temp, picks, minerals);
-
-                picks[i]++;  // 백트래킹
+                picks[i]--;
+                dfs(idx+5,picks,minerals,total+piro,count-1);
+                picks[i]++;
             }
-        }
-    }
-
-    int getMineralIndex(String mineral) {
-        switch (mineral) {
-            case "diamond": return 0;
-            case "iron": return 1;
-            default: return 2;
         }
     }
 }
