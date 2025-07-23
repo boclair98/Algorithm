@@ -2,23 +2,22 @@ import java.util.*;
 
 class Solution {
     int min = Integer.MAX_VALUE;
-    int totalPicks;
+
+    // 피로도 테이블
     int[][] fatigue = {
-        {1, 1, 1},     // 다이아곡괭이
-        {5, 1, 1},     // 철곡괭이
-        {25, 5, 1}     // 돌곡괭이
+        {1, 1, 1},     // 다이아 곡괭이
+        {5, 1, 1},     // 철 곡괭이
+        {25, 5, 1}     // 돌 곡괭이
     };
-    
+
     public int solution(int[] picks, String[] minerals) {
-        totalPicks = picks[0] + picks[1] + picks[2];
-        dfs(picks, minerals, 0, 0);
+        dfs(0, 0, picks, minerals);
         return min;
     }
 
-    void dfs(int[] picks, String[] minerals, int depth, int totalFatigue) {
-        // 5개씩만 캐니까 광물 초과 시 종료
-        if (depth == totalPicks || depth * 5 >= minerals.length) {
-            min = Math.min(min, totalFatigue);
+    void dfs(int idx, int totalPiro, int[] picks, String[] minerals) {
+        if (idx >= minerals.length || Arrays.stream(picks).sum() == 0) {
+            min = Math.min(min, totalPiro);
             return;
         }
 
@@ -26,16 +25,24 @@ class Solution {
             if (picks[i] > 0) {
                 picks[i]--;
 
-                int fatigueSum = 0;
-                for (int j = depth * 5; j < Math.min(minerals.length, depth * 5 + 5); j++) {
-                    String mineral = minerals[j];
-                    int m = mineral.equals("diamond") ? 0 : mineral.equals("iron") ? 1 : 2;
-                    fatigueSum += fatigue[i][m];
+                int temp = 0;
+                for (int j = idx; j < idx + 5 && j < minerals.length; j++) {
+                    int m = getMineralIndex(minerals[j]);
+                    temp += fatigue[i][m];
                 }
 
-                dfs(picks, minerals, depth + 1, totalFatigue + fatigueSum);
-                picks[i]++; // 백트래킹
+                dfs(idx + 5, totalPiro + temp, picks, minerals);
+
+                picks[i]++;  // 백트래킹
             }
+        }
+    }
+
+    int getMineralIndex(String mineral) {
+        switch (mineral) {
+            case "diamond": return 0;
+            case "iron": return 1;
+            default: return 2;
         }
     }
 }
