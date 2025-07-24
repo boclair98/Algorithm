@@ -19,26 +19,28 @@ class Solution {
             if(picks[i] > 0 ){
                 int piro = 0;
                 //idx부터 5번 미네랄 다 캘수 있을 때 까지.
-                for(int j = idx; j < idx + 5 && j < minerals.length; j++){
-                    String mineral = minerals[j];
-                    //i = 0 다이아몬드
-                    if(i == 0){
-                        piro+=1;
-                        //i = 1 철
-                    }else if(i == 1){
-                        if(mineral.equals("diamond")){
-                            piro+=5;
-                        }else{
+                for(int j = idx; j < idx + 5; j++){
+                    if( j < minerals.length){
+                        String mineral = minerals[j];
+                        //i = 0 다이아몬드
+                        if(i == 0){
                             piro+=1;
-                        }
-                        // 돌.
-                    }else{
-                        if(mineral.equals("diamond")){
-                            piro+=25;
-                        }else if(mineral.equals("iron")){
-                            piro+=5;
+                            //i = 1 철
+                        }else if(i == 1){
+                            if(mineral.equals("diamond")){
+                                piro+=5;
+                            }else{
+                                piro+=1;
+                            }
+                            // 돌.
                         }else{
-                            piro+=1;
+                            if(mineral.equals("diamond")){
+                                piro+=25;
+                            }else if(mineral.equals("iron")){
+                                piro+=5;
+                            }else{
+                                piro+=1;
+                            }
                         }
                     }
                 }
