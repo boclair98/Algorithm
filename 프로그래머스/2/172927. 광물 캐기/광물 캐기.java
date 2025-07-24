@@ -15,6 +15,7 @@ class Solution {
             min = Math.min(min,total);
             return;
         }
+        
         for(int i = 0; i<3; i++){
             if(picks[i] > 0 ){
                 int piro = 0;
