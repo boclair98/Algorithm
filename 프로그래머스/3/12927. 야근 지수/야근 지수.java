@@ -14,9 +14,12 @@ class Solution {
             n -- ;
             pq.offer(num);
         }
+        
         while(!pq.isEmpty()){
             answer+=Math.pow(pq.poll(),2);
         }
+        
+        
 //         List<Integer>list = new ArrayList<>();
 //         Queue<Integer> q = new ArrayDeque<>();
 //         for(int i = 0; i<works.length; i++){
