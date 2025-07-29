@@ -15,18 +15,18 @@ class Solution {
             pq.offer(num);
         }
         
+        
         while(!pq.isEmpty()){
             answer+=Math.pow(pq.poll(),2);
         }
         
         
+        
 //         List<Integer>list = new ArrayList<>();
-//         Queue<Integer> q = new ArrayDeque<>();
 //         for(int i = 0; i<works.length; i++){
 //             list.add(works[i]);
 //         }
 //         Collections.sort(list,Collections.reverseOrder());
-        
 //         while(n > 0){
 //             int num = list.remove(0);
 //             if(num > 0){
