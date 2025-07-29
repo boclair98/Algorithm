@@ -2,7 +2,7 @@ import java.util.*;
 class Solution {
     public int solution(int m, int n, int[][] puddles) {
         int answer = 0;
-        int[][] dp = new int[n+1][m+1];
+        int[][] dp = new int[101][101];
         for (int[] row : dp) {
             Arrays.fill(row, -1);
         }
