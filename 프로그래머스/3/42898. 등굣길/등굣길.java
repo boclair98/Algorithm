@@ -2,34 +2,27 @@ import java.util.*;
 class Solution {
     public int solution(int m, int n, int[][] puddles) {
         int answer = 0;
-        int[][] dp = new int[101][101];
-        boolean[][] visited = new boolean[101][101];
-        dp[1][1] = 1;
-        for(int i = 1; i<=n; i++){
-            for(int j = 1; j<=m; j++){
-                if(i == 1 && j == 1) continue;
-                boolean check = true;
-                for(int k = 0; k<puddles.length; k++){
-                    if(i == puddles[k][1] && j == puddles[k][0]){
-                        dp[i][j] = 0;
-                        check = false;
-                        break;
-                        
-                    }
-                }
-                if(!check) continue;
-                dp[i][j] = (dp[i-1][j] + dp[i][j-1]) % 1000000007;
-                // if(check){
-                //     if(i == 1){
-                //         dp[i][j] = 1 % 1000000007;
-                //     }else if(j == 1){
-                //         dp[i][j] = 1% 1000000007;
-                //     }else{
-                //         dp[i][j] = (dp[i-1][j] + dp[i][j-1]) % 1000000007;
-                //     }
-                    // System.out.println(dp[i][j]);
-                }
-            }
-        return dp[n][m];
+        int[][] dp = new int[n+1][m+1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        // dfs(1,1,n,m,puddles,dp);
+        return dfs(1,1,n,m,puddles,dp);
+    }
+    
+    public static int dfs(int x, int y, int n, int m ,int[][] puddles, int[][] dp){
+        if(x > n || y > m){
+            return 0;
+        }
+        if(x == n && y == m) {
+            return 1;
+        }
+        if(dp[x][y] != -1){
+            return dp[x][y] ;
+        }
+        for(int i = 0; i<puddles.length; i++){
+            if(x == puddles[i][1] && puddles[i][0] == y) return 0;
+        }
+        return dp[x][y] = (dfs(x+1,y,n,m,puddles,dp) + dfs(x,y+1,n,m,puddles,dp))  % 1000000007 ;
     }
 }
