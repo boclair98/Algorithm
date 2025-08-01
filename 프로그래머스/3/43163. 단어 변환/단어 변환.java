@@ -9,6 +9,7 @@ class Solution {
         if(min_value == Integer.MAX_VALUE ) return 0;
         return min_value;
     }
+    
     public static void DFS(int index, String begin, String target,String[] words,int count){
         if(begin.equals(target)){
             min_value = Math.min(min_value,count);
@@ -24,6 +25,7 @@ class Solution {
             }
         }
     }
+    
     public static boolean check(String word1, String word2){
         int count = 0;
         for(int i = 0; i<word1.length(); i++){
