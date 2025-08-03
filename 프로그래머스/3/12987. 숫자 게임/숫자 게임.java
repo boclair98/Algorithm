@@ -6,7 +6,7 @@ class Solution {
         Arrays.sort(B);
         int left = 0;
         int right = 0;
-        while (left < A.length && right < B.length) {
+        while (right < B.length) {
             if(A[left] < B[right]){
                 answer++;
                 right++;
