@@ -3,7 +3,6 @@ class Solution {
     public int solution(int n, int[][] edge) {
         int answer = 0;
         List<List<Integer>> list = new ArrayList<>();
-        List<Integer> num = new ArrayList<>();
         int[] dist = new int[n+1];
         Arrays.fill(dist,-1);
         for(int i = 0 ; i<=n; i++){
@@ -27,10 +26,12 @@ class Solution {
                 }
             }
         }
+        
         int max_val = 0;
         for(int number : dist){
             max_val = Math.max(max_val,number);
         }
+        
         for(int i = 1; i<=n; i++){
             if(dist[i] == max_val) answer++;
         }
