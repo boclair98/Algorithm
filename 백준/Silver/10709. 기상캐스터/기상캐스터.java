@@ -9,6 +9,7 @@ class Main {
     static StringTokenizer st;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
@@ -52,10 +53,11 @@ class Main {
 
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m; j++){
-                System.out.print(total[i][j]+" ");
+                sb.append(total[i][j]).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
         }
+        System.out.println(sb);
 
     }
 
