@@ -9,11 +9,11 @@ public class Main {
         String word = br.readLine();
         List<String> col = new ArrayList<>();
         for(int i = 0; i<word.length(); i++){
-            String answer = "";
+            StringBuilder sb = new StringBuilder();
             for(int j = i; j<word.length(); j++){
-                answer += word.charAt(j);
+                sb.append(word.charAt(j));
             }
-            col.add(answer);
+            col.add(sb.toString());
         }
         Collections.sort(col);
         for(String name : col){
