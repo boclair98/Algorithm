@@ -13,15 +13,14 @@ public class Main {
         }
     }
     static int t,n;
-    static int[][] maps;
     static Point[] points;
-    static int[] dx = {1,0,-1,0};
-    static int[] dy = {0,1,0,-1};
     static boolean[] visited;
     static StringTokenizer st;
+    static StringBuilder sb;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         t = Integer.parseInt(br.readLine());
+        sb = new StringBuilder();
         for(int i = 0; i<t; i++){
             n = Integer.parseInt(br.readLine());
             points = new Point[n+2];
@@ -34,11 +33,12 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             points[n+1] = new Point(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
             if(bfs()){
-                System.out.println("happy");
+                sb.append("happy").append("\n");
             }else{
-                System.out.println("sad");
+                sb.append("sad").append("\n");
             }
         }
+        System.out.println(sb.toString());
     }
 
     private static boolean bfs() {
