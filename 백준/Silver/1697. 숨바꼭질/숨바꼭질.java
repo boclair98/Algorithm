@@ -2,44 +2,41 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+    static int n,m;
+    static int[] arr;
+
+    static StringTokenizer st;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-
-        if (n == m) {
-            System.out.println(0);
-            return;
-        }
-
-        int[] dist = new int[100001];
-        Queue<Integer> q = new LinkedList<>();
-        q.offer(n);
-        dist[n] = 1; // 시작 지점은 방문 표시
-
-        while (!q.isEmpty()) {
-            int x = q.poll();
-            for (int i = 0; i < 3; i++) {
-                int cur;
-                if (i == 0) {
-                    cur = x - 1;
-                } else if (i == 1) {
-                    cur = x + 1;
-                } else {
-                    cur = x * 2;
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        arr = new int[100001];
+        Arrays.fill(arr,-1);
+        Queue<Integer> q = new ArrayDeque<>();
+        q.add(n);
+        arr[n] = 0;
+        int count = 0;
+        while(!q.isEmpty()){
+            int cur = q.poll();
+            if(cur == m){
+                System.out.println(arr[cur]);
+                return;
+            }
+            int[] moves ={cur-1, cur+1, cur*2};
+            for(int s:moves){
+                if(s>=0 && s<=100000 && arr[s] == -1){
+                    q.add(s);
+                    arr[s] = arr[cur] + 1;
                 }
-                if (cur < 0 || cur >= 100001) continue;
-                if (dist[cur] != 0) continue;
-
-                if (cur == m) {
-                    System.out.println(dist[x]);
-                    return;
-                }
-
-                dist[cur] = dist[x] + 1;
-                q.offer(cur);
             }
         }
+
+
+
+
     }
+
+
 }
