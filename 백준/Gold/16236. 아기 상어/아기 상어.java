@@ -1,61 +1,71 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int n;
-    static int startX, startY;
-    static int SHARK_LEVEL = 2;
+    static int n,sx,sy;
     static int[][] map;
-    static int count_shark = 0;
-    static int[] dx = {1, 0, -1, 0};
-    static int[] dy = {0, 1, 0, -1};
-    static int time = 0;
-    static List<int[]> list = new ArrayList<>();
-
+    static int shark_size = 2;
+    static boolean[][] visited;
+    static StringTokenizer st;
+    static int[] dx ={1,0,-1,0};
+    static int[] dy ={0,1,0,-1};
+    static List<int[]> eats = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
         map = new int[n][n];
-        for (int i = 0; i < n; i++) {
+        for(int i = 0; i<n; i++){
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < n; j++) {
+            for(int j = 0; j<n; j++){
                 map[i][j] = Integer.parseInt(st.nextToken());
-                if (map[i][j] == 9) {
-                    startX = i;
-                    startY = j;
+                if(map[i][j] == 9){
+                    sx = i;
+                    sy = j;
                     map[i][j] = 0;
                 }
             }
         }
-        while (true) {
-            checkShark(startX, startY);
-            if(list.isEmpty()) break;
-            Collections.sort(list, (a, b) -> {
-                if(a[2]!=b[2]) return a[2] - b[2];
-                else if(a[0]!=b[0]) return a[0] -b[0];
-                return a[1] - b[1];
-            });
-            time += list.get(0)[2];
-            startX = list.get(0)[0];
-            startY = list.get(0)[1];
-            map[startX][startY] = 0;
-            count_shark++;
-            if (count_shark == SHARK_LEVEL) {
-                count_shark = 0;
-                SHARK_LEVEL++;
+        int cnt = 0;
+        int total = 0;
+        while(true){
+            eats.clear();
+            bfs();
+            if(eats.size() == 0){
+                System.out.println(total);
+                break;
             }
-        }
-        System.out.println(time);
-    }
+            Collections.sort(eats,(o1,o2) ->{
+                if(o1[2] == o2[2]){
+                    if(o1[0]== o2[0]){
+                        return Integer.compare(o1[1],o2[1]);
+                    }else{
+                        return Integer.compare(o1[0],o2[0]);
+                    }
+                }
+                return Integer.compare(o1[2],o2[2]);
+            });
+            int x = eats.get(0)[0];
+            int y = eats.get(0)[1];
+            int dist = eats.get(0)[2];
+            total+=dist;
+            map[x][y] = 0;
+            cnt++;
+            if(cnt == shark_size){
+                cnt = 0;
+                shark_size++;
+            }
+            sx = x;
+            sy = y;
 
-    public static void checkShark(int sx, int sy){
+        }
+
+
+    }
+    private static void bfs(){
         Queue<int[]> q = new ArrayDeque<>();
-        list.clear();
-        boolean[][] visited = new boolean[n][n];
-        q.offer(new int[]{sx,sy,0});
+        q.add(new int[]{sx,sy,0});
+        visited = new boolean[n][n];
         visited[sx][sy] = true;
         while(!q.isEmpty()){
             int[] cur = q.poll();
@@ -65,16 +75,20 @@ public class Main {
             for(int i = 0; i<4; i++){
                 int nx = x + dx[i];
                 int ny = y + dy[i];
-                if(nx<0 || ny<0 || nx>=n || ny>=n) continue;
-                if(map[nx][ny] <= SHARK_LEVEL && !visited[nx][ny]){
-                    q.offer(new int[]{nx,ny,dist+1});
+                if(nx<0 || nx>=n || ny<0 || ny>=n) continue;
+                if(map[nx][ny] > shark_size) continue;
+                if((map[nx][ny] == 0 || map[nx][ny] == shark_size) && !visited[nx][ny]){
                     visited[nx][ny] = true;
+                    q.add(new int[]{nx,ny,dist+1});
                 }
-                if(map[nx][ny] < SHARK_LEVEL && map[nx][ny] > 0){
-                    list.add(new int[]{nx,ny,dist+1});
+                if(map[nx][ny] > 0 && map[nx][ny]<shark_size && !visited[nx][ny]){
+                    visited[nx][ny] = true;
+                    q.add(new int[]{nx,ny,dist+1});
+                    eats.add(new int[]{nx,ny,dist+1});
                 }
             }
         }
-
     }
+
+
 }
