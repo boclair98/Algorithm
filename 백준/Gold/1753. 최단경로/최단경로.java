@@ -1,64 +1,67 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    static class Node implements Comparable<Node> {
-        int next;
-        int dist;
-        public Node(int next, int dist) {
-            this.next = next;
-            this.dist = dist;
-        }
-        @Override
-        public int compareTo(Node o) {
-            return this.dist - o.dist;
-        }
-    }
+    static int n,e;
+    static StringTokenizer st;
+    static List<List<int[]>> list;
+    static int[] arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int v = Integer.parseInt(st.nextToken());
-        int e = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(br.readLine());
-        boolean[] visited = new boolean[v+1];
-        int[] dist = new int[v+1];
-        List<List<Node>> list = new ArrayList<>();
-        for(int i = 0; i<=v; i++){
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        e = Integer.parseInt(st.nextToken());
+        int start = Integer.parseInt(br.readLine());
+        list = new ArrayList<>();
+        arr = new int[n+1];
+        Arrays.fill(arr,Integer.MAX_VALUE);
+        for(int i = 0; i<=n; i++){
             list.add(new ArrayList<>());
         }
-        Arrays.fill(dist,Integer.MAX_VALUE);
-        for(int i = 1; i<=e; i++){
+
+        for(int i = 0; i<e; i++){
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-            list.get(a).add(new Node(b,c));
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            int dist = Integer.parseInt(st.nextToken());
+            list.get(x).add(new int[]{y,dist});
+//            list.get(y).add(new int[]{x,dist});
         }
-        dist[k] = 0;
-        PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
-        priorityQueue.offer(new Node(k,0));
-        while(!priorityQueue.isEmpty()){
-            Node cur = priorityQueue.poll();
-            int node = cur.next;
-            int di = cur.dist;
-            if(visited[node]) continue;
-            visited[node] = true;
-            for(Node n : list.get(node)){
-                if(dist[n.next] > di + n.dist){
-                    dist[n.next] = di + n.dist;
-                    priorityQueue.offer(new Node(n.next,dist[n.next]));
+        dijkstra(start);
+        for(int i = 1; i<=n; i++){
+            if(arr[i] ==Integer.MAX_VALUE){
+                System.out.println("INF");
+            }else{
+                System.out.println(arr[i]);
+            }
+        }
+
+    }
+    static void dijkstra(int start){
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1,o2) -> {
+            return Integer.compare(o1[1],o2[1]);
+        });
+        arr[start] = 0;
+        pq.add(new int[]{start,0});
+        while(!pq.isEmpty()){
+            int[] cur = pq.poll();
+            int now = cur[0];
+            int dist = cur[1];
+            for(int[] next : list.get(now)){
+                int nextNode = next[0];
+                int nextDist = next[1];
+                if(arr[nextNode] > arr[now] + nextDist){
+                    arr[nextNode] = arr[now] + nextDist;
+                    pq.add(new int[]{nextNode,arr[nextNode]});
                 }
             }
         }
-        for(int i = 1; i<=v; i++){
-            if(dist[i] == Integer.MAX_VALUE){
-                System.out.println("INF");
-            }else{
-                System.out.println(dist[i]);
-            }
-        }
+
     }
+
+
+
+
+
 }
