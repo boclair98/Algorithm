@@ -40,6 +40,7 @@ public class Main {
                 arr[next] = arr[num] + 1;
                 q.add(new int[]{next,time+1});
             }
+            
 
         }
 
