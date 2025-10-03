@@ -14,6 +14,7 @@ class Solution {
         answer[1] = max_price;
         return answer;
     }
+    
     static void dfs(int idx, int[] emoticons, int[][] users){
         if(idx == emoticons.length){
             // System.out.println(list);
@@ -43,12 +44,11 @@ class Solution {
             }
             return;
         }
-        for(int i = 0; i<4; i++){
         
+        for(int i = 0; i<4; i++){
             list.add(discount[i]);
             dfs(idx+1,emoticons,users);
             list.remove(list.size()-1);
-
         }
         
     }
