@@ -12,7 +12,7 @@ public class Main {
         long n = Long.parseLong(br.readLine());
         for(int i = 0; i < n; i++){
             st = new StringTokenizer(br.readLine());
-            long count = Integer.parseInt(st.nextToken());
+            long count = Long.parseLong(st.nextToken());
             map = new HashMap<>();
             boolean c = false;
             for(long j = 0; j<count; j++){
