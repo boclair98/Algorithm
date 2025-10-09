@@ -30,7 +30,7 @@ class Solution {
         
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m; j++){
-                if(map[i][j]!='.') answer++;
+                if(map[i][j] != '.') answer++;
             }
             
         }
@@ -69,6 +69,7 @@ class Solution {
                 if(map[nx][ny] == a && !v[nx][ny]){
                     v[nx][ny] = true;
                     map[nx][ny] = '.';
+                    visited[nx][ny] = true;
                 }
             }
             
