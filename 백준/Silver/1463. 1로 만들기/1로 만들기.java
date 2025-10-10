@@ -3,29 +3,44 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    static StringTokenizer st;
+
+    static int n;
+    static int[] dp ;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int[] dp = new int[1000001];
-        int idx = 0 ;
-
-        for(int i =2; i<=n; i++){
-            dp[i] = dp[i-1] + 1 ;
-            if(i % 3 == 0){
-                dp[i] = Math.min(dp[i],dp[i/3] + 1);
-            }
-            if(i % 2 == 0){
-                dp[i] = Math.min(dp[i],dp[i/2] + 1);
-            }
-//            System.out.println(dp[i]);
-        }
-        System.out.println(dp[n]);
-
-
-
+        n = Integer.parseInt(br.readLine());
+        dp = new int[n+1];
+        System.out.println(bfs(n));
     }
-}
 
+    private static int bfs(int depth) {
+        Queue<int[]> q = new ArrayDeque<>();
+        boolean[] v = new boolean[depth+1];
+        q.add(new int[]{depth,0});
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
+            int next = cur[0];
+            int count = cur[1];
+            if(next == 1) return count;
+            if(next  % 3 == 0 && !v[next / 3]){
+                q.add(new int[]{next / 3,count+1});
+                v[next / 3] = true;
+            }
+            if(next % 2 == 0 && !v[next/2]){
+                q.add(new int[]{next / 2,count+1});
+                v[next / 2] = true;
+            }
+            if(!v[next-1]){
+                q.add(new int[]{next-1,count+1});
+                v[next-1] = true;
+            }
+            
+        }
+        return -1;
+    }
+
+
+}
