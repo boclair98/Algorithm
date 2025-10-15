@@ -28,31 +28,20 @@ public class Main {
             }
             return Integer.compare(o2[3],o1[3]);
         });
-        int count = 1;
-        Queue<int[]> q = new ArrayDeque<>();
-        for(int i = 0 ; i<n-1; i++){
-            int r1 = list.get(i)[0];
-            int g1 = list.get(i)[1];
-            int s1 = list.get(i)[2];
-            int b1 = list.get(i)[3];
-            int r2 = list.get(i+1)[0];
-            int g2 = list.get(i+1)[1];
-            int s2 = list.get(i+1)[2];
-            int b2 = list.get(i+1)[3];
-            if(g1 == g2 && s1 == s2 && b1 == b2){
-                q.add(new int[]{r1,g1,s1,b1,count});
-                q.add(new int[]{r2,g2,s2,b2,count});
-                count++;
-                continue;
+        int[] rank = new int[n+1];
+        rank[0] = 1;
+        for(int i = 1 ; i<n; i++) {
+            int[] f = list.get(i-1);
+            int[] e = list.get(i);
+            if(f[1] == e[1] && f[2] == e[2] && f[3] == e[3]){
+                rank[i] = rank[i-1];
             }else{
-                q.add(new int[]{r1,g1,s1,b1,count++});
-                q.add(new int[]{r2,g2,s2,b2,count});
+                rank[i] = i+1;
             }
         }
-        for (int[] ints : q) {
-//            System.out.println(ints[0]+" "+ints[4]);
-            if(ints[0] == k){
-                System.out.println(ints[4]);
+        for(int i = 0; i<n; i++){
+            if(list.get(i)[0] == k){
+                System.out.println(rank[i]);
                 break;
             }
         }
