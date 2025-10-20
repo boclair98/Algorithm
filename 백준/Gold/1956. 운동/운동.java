@@ -30,7 +30,6 @@ public class Main {
         for(int k = 1; k<=v; k++){
             for(int i = 1; i<=v; i++){
                 for(int j = 1; j<=v; j++){
-                    if (dist[i][k] == INF || dist[k][j] == INF) continue;
                     if(dist[i][j] > dist[i][k] + dist[k][j]){
                         dist[i][j] = dist[i][k] + dist[k][j];
                     }
