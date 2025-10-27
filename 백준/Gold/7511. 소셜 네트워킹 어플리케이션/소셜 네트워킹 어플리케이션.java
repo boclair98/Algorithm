@@ -6,13 +6,14 @@ import java.util.*;
 
 public class Main {
     static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
     static int n,k,a,b,m;
     static int[] arr;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         for(int i = 0; i<n; i++){
-            System.out.println("Scenario "+(i+1)+":");
+            sb.append("Scenario "+(i+1)+":").append("\n");
             k = Integer.parseInt(br.readLine());
             int cnt = Integer.parseInt(br.readLine());
             arr = new int[k+1];
@@ -31,13 +32,14 @@ public class Main {
                 int num1 = Integer.parseInt(st.nextToken());
                 int num2 = Integer.parseInt(st.nextToken());
                 if (find(num1) == find(num2)){
-                    System.out.println(1);
+                    sb.append(1).append("\n");
                 }else{
-                    System.out.println(0);
+                    sb.append(0).append("\n");
                 }
             }
-            System.out.println();
+            sb.append("\n");
         }
+        System.out.println(sb.toString());
     }
     static int find(int a){
         if(a == arr[a]){
