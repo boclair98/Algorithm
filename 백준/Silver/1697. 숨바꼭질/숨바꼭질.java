@@ -2,41 +2,47 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int n,m;
-    static int[] arr;
-
     static StringTokenizer st;
-
+    static int n,k;
+    static int[] arr = new int[100001];
+    static int[] range = new int[]{2,1,-1};
+    static int num;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        arr = new int[100001];
+        k = Integer.parseInt(st.nextToken());
         Arrays.fill(arr,-1);
+        bfs(n);
+    }
+
+    private static void bfs(int sx) {
         Queue<Integer> q = new ArrayDeque<>();
-        q.add(n);
-        arr[n] = 0;
-        int count = 0;
+        q.add(sx);
+        arr[sx] = 0;
         while(!q.isEmpty()){
-            int cur = q.poll();
-            if(cur == m){
-                System.out.println(arr[cur]);
+            int now = q.poll();
+            if(now == k){
+                System.out.println(arr[k]);
                 return;
             }
-            int[] moves ={cur-1, cur+1, cur*2};
-            for(int s:moves){
-                if(s>=0 && s<=100000 && arr[s] == -1){
-                    q.add(s);
-                    arr[s] = arr[cur] + 1;
+            for(int i = 0 ; i<3; i++){
+                if(i == 0){
+                    num = now * 2;
                 }
+                if(i == 1){
+                    num = now + 1;
+                }
+                if(i == 2){
+                    num = now - 1;
+                }
+                if(num >=0 && num<=100000 && arr[num] ==-1){
+                    arr[num] = arr[now] + 1;
+                    q.add(num);
+                }
+
             }
         }
 
-
-
-
     }
-
-
 }
