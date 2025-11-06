@@ -18,10 +18,10 @@ public class Main {
         for(int i = 1; i<=n; i++){
             arr[i] = Integer.parseInt(br.readLine());
         }
-        for(int i = 1; i<=n; i++){
-            if(!visited[i]){
+        for(int i = 1; i<=n; i++) {
+            if (!visited[i]) {
                 visited[i] = true;
-                dfs(i,i);
+                dfs(i, i);
                 visited[i] = false;
             }
         }
