@@ -1,53 +1,35 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-class Main {
-    static class Node{
-        int node;
-        int dist;
-
-        public Node(int node, int dist) {
-            this.node = node;
-            this.dist = dist;
-        }
-    }
+public class Main {
+    static StringTokenizer st;
+    static int n,m,k,x;
+    static int[] dist;
+    static List<List<Integer>> graph = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
-        int x = Integer.parseInt(st.nextToken());
-        int[] dist = new int[n+1];
-        Arrays.fill(dist, -1);
-        dist[x] = 0;
-        List<List<Node>> graph = new ArrayList<>();
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        x = Integer.parseInt(st.nextToken());
+        dist = new int[n+1];
         for(int i = 0; i<=n; i++){
             graph.add(new ArrayList<>());
         }
-        for(int i = 1; i<=m; i++){
+        Arrays.fill(dist,-1);
+        for(int i = 0; i<m; i++){
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            graph.get(a).add(new Node(b,1));
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            graph.get(x).add(y);
         }
-        Queue<Integer> q= new ArrayDeque<>();
-        q.offer(x);
-        while(!q.isEmpty()){
-            int cur = q.poll();
-            for(Node node : graph.get(cur)){
-                if(dist[node.node] == -1){
-                    dist[node.node] = dist[cur] + 1;
-                    q.offer(node.node);
-                }
-            }
-        }
+        dijk(x);
         boolean found = false;
-        for(int i = 1; i<=n; i++){
+        for(int i =1; i<=n; i++){
             if(dist[i] == k){
                 found = true;
                 System.out.println(i);
@@ -57,7 +39,19 @@ class Main {
             System.out.println(-1);
         }
 
-
     }
-
+    static void dijk(int start){
+        Queue<Integer> pq = new ArrayDeque<>();
+        pq.add(start);
+        dist[start] = 0;
+        while(!pq.isEmpty()){
+            int now = pq.poll();
+            for(Integer node : graph.get(now)){
+                if(dist[node]== -1){
+                    dist[node] = dist[now] + 1;
+                    pq.add(node);
+                }
+            }
+        }
+    }
 }
