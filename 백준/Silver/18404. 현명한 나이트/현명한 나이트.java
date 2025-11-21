@@ -34,9 +34,11 @@ public class Main {
             list.add(new int[]{x-1,y-1});
         }
         bfs();
+        StringBuilder sb = new StringBuilder();
         for(int i = 0; i<list.size(); i++){
-            System.out.print(count[list.get(i)[0]][list.get(i)[1]]+" ");
+            sb.append(count[list.get(i)[0]][list.get(i)[1]]).append(" ");
         }
+        System.out.println(sb.toString());
     }
 
     private static void bfs() {
