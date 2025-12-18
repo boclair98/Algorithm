@@ -8,29 +8,31 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
     static int n;
-    static int[] arr = new int[10050];
-    static int[][] dp = new int[10050][3];
+    static int[] arr;
+    static int[][] dp;
+    static int recur(int idx, int cnt){
+        if(idx == n){
+            return 0;
+        }
+        if(dp[idx][cnt]!=-1){
+            return dp[idx][cnt];
+        }
+        int a = 0;
+        a = recur(idx+1,0);
+        if(cnt < 2){
+            a = Math.max(a,recur(idx+1,cnt+1)+arr[idx]);
+        }
+        return dp[idx][cnt] = a ;
+    }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
+        arr = new int[n];
+        dp = new int[n][3];
         for(int i = 0; i<n; i++){
             arr[i] = Integer.parseInt(br.readLine());
+            Arrays.fill(dp[i],-1);
         }
-        for(int i = 0; i < n; i++){
-            Arrays.fill(dp[i], -1);
-        }
-        System.out.println(DFS(0,0));
-
+        System.out.println(recur(0,0));
     }
-    static int DFS(int idx, int count){
-        if(idx == n) return 0;
-        if(dp[idx][count]!=-1) return dp[idx][count];
-        int result = 0;
-        result = DFS(idx+1,0);
-        if(count<2){
-            result = Math.max(result,DFS(idx+1,count+1)+arr[idx]);
-        }
-        return dp[idx][count] = result;
-    }
-
 }
