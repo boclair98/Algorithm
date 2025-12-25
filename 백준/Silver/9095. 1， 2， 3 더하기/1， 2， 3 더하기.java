@@ -1,28 +1,35 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
+    static int n;
+    static long[] dp ;
+    static long recur(int num){
+        if(num == 0) return 1;
+        if(num < 0) return 0;
+        if(dp[num]!=-1) return dp[num];
+        long ans = 0;
+        ans+=recur(num-1);
+        ans+=recur(num-2);
+        ans+=recur(num-3);
+        return dp[num] = ans;
+    }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int[] dp = new int[20];
-        dp[1] = 1;
-        dp[2] = 2;
-        dp[3] = 4;
-        for(int i = 4; i<11; i++){
-            dp[i] = dp[i-1] + dp[i-2] + dp[i-3];
+        n = Integer.parseInt(br.readLine());
+        dp = new long[100050];
+        Arrays.fill(dp,-1);
+        while(n-->0){
+            int goal = Integer.parseInt(br.readLine());
+            long a = (recur(goal) );
+//            sb = new StringBuilder();
+            sb.append(a).append("\n");
         }
-        for(int i = 0 ;i<n; i++){
-            int num = Integer.parseInt(br.readLine());
-            System.out.println(dp[num]);
-        }
+        System.out.println(sb.toString());
     }
-
-
 }
-
