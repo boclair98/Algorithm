@@ -15,9 +15,7 @@ public class Main {
         int min = 1000000000;
         for(int i = 1; i<= res; i++){
             cnt = recur(idx+i);
-            if(cnt != 1000000000){
-                min = Math.min(min, cnt+1);
-            }
+            min = Math.min(min, cnt+1);
         }
         return dp[idx] = min;
 
