@@ -13,6 +13,7 @@ public class Main {
     static int[] arr = new int[15];
     static int max_val = Integer.MAX_VALUE;
     static void recur(int idx, int coin){
+        if(coin>=max_val) return;
         if(idx == n+1){
             max_val = Math.min(max_val,coin);
             return;
