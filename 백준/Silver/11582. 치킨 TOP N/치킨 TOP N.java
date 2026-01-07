@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class Main {
+    static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
     static int n, k;
     static List<Integer> list;
@@ -27,9 +28,10 @@ public class Main {
             }
             Collections.sort(list);
             for (Integer num : list) {
-                System.out.print(num+" ");
+                sb.append(num+" ");
             }
         }
+        System.out.println(sb.toString());
 
     }
 }
