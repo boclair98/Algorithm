@@ -1,63 +1,60 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
+
 import java.util.*;
 
 public class Main {
+    static StringBuilder sb;
     static StringTokenizer st;
-    static int v,e;
+    static int n,e;
+    static List<List<int[]>> list = new ArrayList<>();
     static int[] dist;
-    static List<List<int[]>> graph = new ArrayList<>();
-    static final int INF = 1000000000;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         st = new StringTokenizer(br.readLine());
-        v = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
         e = Integer.parseInt(st.nextToken());
-        for(int i = 0; i<=v; i++){
-            graph.add(new ArrayList<>());
+        for(int i = 0; i <=n; i++){
+            list.add(new ArrayList<>());
         }
-        for(int i = 0; i<e; i++){
+        for(int i = 0; i < e; i++){
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-            graph.get(a).add(new int[]{b,c});
-            graph.get(b).add(new int[]{a,c});
+            int start = Integer.parseInt(st.nextToken());
+            int end = Integer.parseInt(st.nextToken());
+            int distance = Integer.parseInt(st.nextToken());
+            list.get(start).add(new int[]{end,distance});
+            list.get(end).add(new int[]{start,distance});
         }
         st = new StringTokenizer(br.readLine());
-        int s1 = Integer.parseInt(st.nextToken());
-        int s2 = Integer.parseInt(st.nextToken());
-        long start1 = (long)dijkstart(1,s1) + (long)dijkstart(s1,s2) +(long)dijkstart(s2,v);
-        long start2 = (long)dijkstart(1,s2) + (long)dijkstart(s2,s1) + (long)dijkstart(s1,v);
-        if(Math.min(start1,start2) >= INF){
-            System.out.println(-1);
-        }else{
-            System.out.println(Math.min(start1,start2));
-        }
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        long path1 = (long) dijkstra(1,a) + (long) dijkstra(a,b) + (long) dijkstra(b,n);
+        long path2 = (long) dijkstra(1,b) + (long) dijkstra(b,a) + (long) dijkstra(a,n);
+        long answer = Math.min(path1,path2);
+        if(answer >= 1000000000) System.out.println(-1);
+        else System.out.println(answer);
     }
-
-    private static int dijkstart(int start,int end) {
-        dist = new int[v+1];
-        Arrays.fill(dist,INF);
+    static int dijkstra(int num,int end){
+        dist = new int[n+1];
+        Arrays.fill(dist,1000000000);
+        dist[num] = 0;
         PriorityQueue<int[]> pq = new PriorityQueue<>((o1,o2)->{
             return Integer.compare(o1[1],o2[1]);
         });
-        pq.add(new int[]{start,0});
-        dist[start] = 0;
-        while (!pq.isEmpty()){
+        pq.add(new int[]{num,0});
+        while(!pq.isEmpty()){
             int[] cur = pq.poll();
             int node = cur[0];
             int dists = cur[1];
             if(dists > dist[node]) continue;
-            for(int[] now : graph.get(node)){
-                int nextnode =now[0];
-                int nextdist = dists + now[1];
-                if(dist[nextnode] > nextdist){
-                    dist[nextnode] = nextdist;
-                    pq.add(new int[]{nextnode,nextdist});
+            for(int[] next : list.get(node)){
+                int next_node = next[0];
+                int next_dist = dists + next[1];
+                if(dist[next_node] > next_dist){
+                    dist[next_node] = next_dist;
+                    pq.add(new int[]{next_node,next_dist});
                 }
             }
         }
