@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Main {
     static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,8 +29,9 @@ public class Main {
             pq.add(new String[]{s[0],s[1],s[2],s[3]});
         }
         for(int i = 1; i <= n; i++) {
-            System.out.println(pq.poll()[0]);
+            sb.append(pq.poll()[0]).append("\n");
         }
+        System.out.println(sb);
 
     }
 }
