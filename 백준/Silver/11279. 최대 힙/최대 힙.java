@@ -15,12 +15,13 @@ public class Main {
         while(n-->0){
             int num = Integer.parseInt(br.readLine());
             if(num > 0) pq.add(num);
-            if(pq.size() == 0 && num == 0){
-                System.out.println(0);
+            if(pq.isEmpty() && num == 0){
+                sb.append(0).append("\n");
             }else if(num == 0){
-                System.out.println(pq.poll());
+                sb.append(pq.poll()).append("\n");
             }
         }
+        System.out.println(sb);
 
     }
 }
