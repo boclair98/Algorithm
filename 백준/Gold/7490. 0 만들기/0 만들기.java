@@ -24,7 +24,7 @@ public class Main {
                 }
             }
             ans+=arr[idx];
-            list.add(String.valueOf(ans));
+            list.add(ans);
             int num  = -1;
             boolean first = false;
             for(int i = 0; i < list.size(); i++){
