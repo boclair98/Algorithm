@@ -13,8 +13,8 @@ public class Main {
         if(total > d) return 0;
         if(idx == p) return 0;
         if(dp[idx][total] != -1) return dp[idx][total];
-        int res = recur(idx+1, total);
-        int res1 = Math.min(arr[idx][1] , recur(idx+1, total + arr[idx][0]));
+        int res = Math.min(arr[idx][1],recur(idx+1, total + arr[idx][0]));
+        int res1 = recur(idx+1,total);
         return dp[idx][total] = Math.max(res, res1);
     }
 
