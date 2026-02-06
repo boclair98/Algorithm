@@ -6,8 +6,8 @@ import java.util.*;
 public class Main {
     static StringTokenizer st;
     static int d,p;
-    static int[][] arr = new int[400][2];
-    static int[][]dp = new int[400][100001];
+    static int[][] arr = new int[350][2];
+    static int[][]dp = new int[350][100001];
     static int recur(int idx, int total){
         if(total == d) return Integer.MAX_VALUE;
         if(total > d) return 0;
@@ -15,7 +15,7 @@ public class Main {
         if(dp[idx][total] != -1) return dp[idx][total];
         int res = Math.min(arr[idx][1],recur(idx+1, total + arr[idx][0]));
         int res1 = recur(idx+1,total);
-        return dp[idx][total] = Math.max(res, res1);
+        return dp[idx][total] = Math.max(res,res1);
     }
 
     public static void main(String[] args) throws IOException {
@@ -28,7 +28,7 @@ public class Main {
             arr[i][0] = Integer.parseInt(st.nextToken());
             arr[i][1] = Integer.parseInt(st.nextToken());
         }
-        for(int i = 0; i < 400; i++) {
+        for(int i = 0; i < 350; i++) {
             Arrays.fill(dp[i], -1);
         }
         System.out.println(recur(0, 0));
