@@ -1,3 +1,4 @@
+import java.awt.color.ColorSpace;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,54 +6,48 @@ import java.util.*;
 
 public class Main {
     static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
+    static int n,m;
+    static int[] parents;
+    static int find(int x){
+        if(parents[x]==x) return x;
+        return parents[x] = find(parents[x]);
+    }
+    static void union(int x, int y){
+        x = find(x);
+        y = find(y);
+        if(x!=y){
+            if(x < y){
+                parents[y]=x;
+            }else{
+                parents[x]=y;
+            }
+        }
+    }
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int[] parent = new int[n+1];
-        for (int i = 1; i <= n; i++) {
-            parent[i] = i;
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        parents = new int[n+1];
+        for(int i=0;i<=n;i++){
+            parents[i] = i;
         }
-        for(int i = 0; i<m; i++){
+        while(m -- > 0){
             st = new StringTokenizer(br.readLine());
-            int s = Integer.parseInt(st.nextToken());
+            int cn = Integer.parseInt(st.nextToken());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-
-            if(s == 0){
-                union(a,b,parent);
-            }else {
-                int x = find(a, parent);
-                int y = find(b, parent);
-                if (x == y) {
-                    sb.append("YES").append("\n");
-                } else {
-                    sb.append("NO").append("\n");
-                }
+            if(cn == 0){
+                union(a,b);
+            }
+            if(cn == 1){
+                int x = find(a);
+                int y = find(b);
+                if(x == y) sb.append("YES").append("\n");
+                else sb.append("NO").append("\n");
             }
         }
-        System.out.println(sb.toString());
-    }
-
-    private static void union(int a, int b,int[] parent) {
-        a = find(a,parent);
-        b = find(b,parent);
-        if(a!=b){
-            if(a<b){
-                parent[b] = a;
-            }else{
-                parent[a] = b;
-            }
-        }
-
-    }
-
-    private static int find(int a,int[] parent) {
-
-        if(a == parent[a]){
-            return a;
-        }
-        return parent[a] = find(parent[a],parent);
+        System.out.println(sb);
     }
 }
