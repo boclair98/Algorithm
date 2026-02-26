@@ -32,8 +32,9 @@ public class Main {
         Arrays.fill(arr,-1);
         dfs(r,0);
         for(int i = 1; i <= n; i++){
-            System.out.println(arr[i]);
+            sb.append(arr[i]).append("\n");
         }
+        System.out.println(sb.toString());
     }
     static void dfs(int start,int depth){
         arr[start] = depth;
