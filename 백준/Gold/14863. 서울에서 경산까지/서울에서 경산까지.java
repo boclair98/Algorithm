@@ -10,12 +10,12 @@ public class Main {
     static int n,t;
     static int[][] walk = new int[100][2];
     static int[][] bike = new int[100][2];
-    static long[][] dp = new long[100][100000];
-    static long recur(int idx, int total){
-        if(total>t) return -Integer.MAX_VALUE;
+    static int[][] dp = new int[101][100050];
+    static int recur(int idx, int total){
+        if(total>t) return -1_000_000_000;
         if(idx == n) return 0;
         if(dp[idx][total] != -1) return dp[idx][total];
-        long ans = 0;
+        int ans = 0;
         ans = recur(idx+1,total+walk[idx][0]) + walk[idx][1];
 //        ans = Math.max(ans,recur(idx+1,total+walk[idx][0]) + walk[idx][1]);
         ans = Math.max(ans,recur(idx+1,total+bike[idx][0]) + bike[idx][1]);
