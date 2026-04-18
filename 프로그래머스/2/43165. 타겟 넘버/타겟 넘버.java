@@ -1,22 +1,18 @@
 import java.util.*;
 class Solution {
-    static int total = 0;
+    static int answer = 0;
     public int solution(int[] numbers, int target) {
-        int answer = 0;
-        boolean[] visited = new boolean[numbers.length];
-        
-        DFS(0,answer,numbers,target,visited);
-        
-        return total;
+        dfs(numbers,target,0,0);
+        return answer;
     }
-    static void DFS(int idx, int answer, int[] numbers, int target, boolean[] visited){
+    public static void dfs(int[] numbers, int target ,int total,int idx){
         if(idx == numbers.length){
-            if(answer == target){
-                total++;
+            if(total == target){
+                answer++;
             }
             return;
         }
-        DFS(idx+1,answer+numbers[idx],numbers,target,visited);
-        DFS(idx+1,answer-numbers[idx],numbers,target,visited);
+        dfs(numbers,target,total+numbers[idx],idx+1);
+        dfs(numbers,target,total-numbers[idx],idx+1);
     }
 }
