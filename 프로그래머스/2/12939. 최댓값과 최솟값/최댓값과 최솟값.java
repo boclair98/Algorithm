@@ -1,25 +1,14 @@
 import java.util.*;
 class Solution {
     public String solution(String s) {
-        String answer = "";
-        String number = "";
+        StringBuilder answer = new StringBuilder();
+        String[] num = s.split(" ");
         List<Integer> list = new ArrayList<>();
-        for(int i = 0; i<s.length(); i++){
-            char word = s.charAt(i);
-            if(word==' '){
-                list.add(Integer.parseInt(number));
-                number="";
-            }else{
-                number+=word;
-            }
+        for(int i = 0; i < num.length; i++){
+            list.add(Integer.parseInt(num[i]));
         }
-        
-        list.add(Integer.parseInt(number));
         Collections.sort(list);
-        answer+=list.get(0);
-        answer+=" ";
-        answer+=list.get(list.size()-1);
-       
-        return answer;
+        answer.append(list.get(0)).append(" ").append(list.get(list.size()-1));
+        return answer.toString();
     }
 }
