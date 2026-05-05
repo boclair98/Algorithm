@@ -5,26 +5,23 @@ class Solution {
     static int[][] staticLand;
     static int recur(int idx,int s){
         if(idx == n) return 0;
-        if(s!=-1 && dp[idx][s]!= -1) return dp[idx][s];
+        if(dp[idx][s]!= -1) return dp[idx][s];
         int ans = 0;
         for(int i = 0; i < 4; i++){
             if(s == i) continue;
             ans = Math.max(ans, recur(idx+1,i)+staticLand[idx][i]);
         }
-        if(s!= -1){
-            dp[idx][s] = ans;
-        }
-        return ans;
+        return dp[idx][s] = ans;
     }
     int solution(int[][] land) {
         int answer = 0;
         staticLand = land;
         n = land.length;
         m = land[0].length;
-        dp = new int[n][m];
+        dp = new int[n][10];
         for(int i = 0; i < n; i++){
             Arrays.fill(dp[i],-1);
         }
-        return recur(0,-1);
+        return recur(0,5);
     }
 }
