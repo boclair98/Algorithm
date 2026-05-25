@@ -1,18 +1,15 @@
 import java.util.*;
-import java.lang.*;
 class Solution {
     public long solution(long n) {
-        String answer = "";
         StringBuilder sb = new StringBuilder();
-        String number = String.valueOf(n);
-        ArrayList<Integer> arr = new ArrayList<>();
-        for(int i = 0; i<number.length(); i++){
-            arr.add((int) 1* number.charAt(i)-'0');
+        String num = String.valueOf(n);
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < num.length(); i++){
+            list.add(Integer.parseInt(String.valueOf(num.charAt(i))));
         }
-        Collections.sort(arr,Collections.reverseOrder());
-        
-        for(int arrs : arr){
-            sb.append(arrs);
+        Collections.sort(list,Collections.reverseOrder());
+        for(int i = 0; i < list.size(); i++){
+            sb.append(list.get(i));
         }
         return Long.parseLong(sb.toString());
     }
