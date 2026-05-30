@@ -6,11 +6,10 @@ class Solution
         int answer = 0;
         Arrays.sort(A);
         Arrays.sort(B);
-        int n = A.length;
-        for(int i = 0; i<n; i++){
-            answer+=(A[i] * B[n-i - 1]);
+        int idx = B.length - 1;
+        for(int i = 0; i < A.length; i++){
+            answer+=(A[i] * B[idx--]);
         }
-        
 
         return answer;
     }
