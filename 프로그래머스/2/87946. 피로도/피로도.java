@@ -1,43 +1,24 @@
 import java.util.*;
-
 class Solution {
-    static boolean[] visited; 
-    static int n, maxval;
-    static Deque<Integer> q = new ArrayDeque<>();
-
+    static boolean[] visited;
+    static int n, answer;
     public int solution(int k, int[][] dungeons) {
+        answer = 0;
         n = dungeons.length;
         visited = new boolean[n];
-        maxval = 0;
-        DFS(0, k, dungeons);
-        return maxval;
+        backTracking(k,0,dungeons);
+        return answer;
     }
-
-    static void DFS(int idx, int power, int[][] dungeons) {
-        if (idx == n) {
-            int count = 0;
-            int currPower = power;
-
-            for (Integer s : q) {
-                int need = dungeons[s][0];
-                int cost = dungeons[s][1];
-                if (currPower >= need) {
-                    currPower -= cost;
-                    count++;
+    static void backTracking(int nowK,int cnt,int[][] dungeons){
+        answer = Math.max(answer, cnt);
+        if(cnt == n) return;
+        for(int i = 0; i < n; i++){
+            if(!visited[i]){
+                if(dungeons[i][0]<=nowK){
+                    visited[i] = true;
+                    backTracking(nowK-dungeons[i][1],cnt+1,dungeons);
+                    visited[i] = false;
                 }
-            }
-
-            maxval = Math.max(maxval, count);
-            return;
-        }
-
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                q.offer(i);            
-                DFS(idx + 1, power, dungeons);
-                q.removeLast();        
-                visited[i] = false;
             }
         }
     }
