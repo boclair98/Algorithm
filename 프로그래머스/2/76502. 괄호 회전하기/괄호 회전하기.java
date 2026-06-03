@@ -8,8 +8,8 @@ class Solution {
             q.add(s.charAt(i));
         }
         for(int i = 0; i < s.length(); i++){
-            q.add(q.poll());
             if(check(q)) answer++;
+            q.add(q.poll());
         }
         return answer;
     }
@@ -21,17 +21,17 @@ class Solution {
             }else{
                 if(stack.isEmpty()) return false;
                 if(s == ')'){
-                    if(stack.get(stack.size()-1) == '('){
+                    if(stack.peek() == '('){
                         stack.pop();
                     }
                 }
                 if(s == ']'){
-                    if(stack.get(stack.size()-1) == '['){
+                    if(stack.peek()  == '['){
                         stack.pop();
                     }
                 }
                 if(s == '}'){
-                    if(stack.get(stack.size()-1) == '{'){
+                    if(stack.peek()  == '{'){
                         stack.pop();
                     }
                 }
