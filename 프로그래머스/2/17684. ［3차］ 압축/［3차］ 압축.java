@@ -1,28 +1,30 @@
 import java.util.*;
 class Solution {
     public List<Integer> solution(String msg) {
+        StringBuilder sb = new StringBuilder();;
         List<Integer> answer = new ArrayList<>();
-        
-        String w = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Map<String,Integer> map = new HashMap<>();
-        for(int i = 0; i<w.length(); i++){
-            String w1 = w.charAt(i)+"";
-            map.put(w1,i+1);
+        List<String> w = new ArrayList<>();
+        String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for(int i = 1; i <= s.length(); i++){
+            map.put(String.valueOf(s.charAt(i-1)),i);
         }
+        
         int number = 27;
+        int start_idx = 0;
         int idx = 0;
-        String word = "";
-        while (idx < msg.length()){
-            word+=msg.charAt(idx)+"";
-            if(map.containsKey(word)){
-                idx++;
+        while(start_idx < msg.length()){
+            sb.append(msg.charAt(start_idx));
+            if(map.containsKey(sb.toString())){
+                start_idx++;
             }else{
-                answer.add(map.get(word.substring(0,word.length()-1)));
-                map.put(word,number++);
-                word="";
+                map.put(sb.toString(), number++);
+                answer.add(map.get(sb.toString().substring(0,sb.toString().length()-1)));
+                sb = new StringBuilder();              
             }
         }
-        answer.add(map.get(word));
+        answer.add(map.get(sb.toString()));
+        
         return answer;
     }
 }
