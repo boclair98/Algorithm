@@ -1,48 +1,44 @@
 import java.util.*;
-//호텔 끝나는 시간과 들어가는 시간을 비교 후 방을 추가할지 갱신할지 
-
 class Solution {
     public int solution(String[][] book_time) {
-        int room = 0;
-        Arrays.sort(book_time,(a,b) -> a[0].compareTo(b[0]));
+        List<Integer> room = new ArrayList<>();
+        int answer = 0;
         
-        //시간 저장
-        List<Integer> time = new ArrayList<>();
+        //정렬
+        Arrays.sort(book_time, (o1, o2) -> {
+            if (o1[0].equals(o2[0])) {
+                return o1[1].compareTo(o2[1]);
+            }
+            return o1[0].compareTo(o2[0]);
+        });
         
-       
-        //우선 기존의 머무는 사람들과 비교한다.
-        //끝나는 시간의 방이 있다면 갱신한다.
-        // 없다면 방을 추가한다.(room)
-        //i가0 즉 처음 인사람은 무조건 입장 , 방 추가
-        for(int i = 0; i<book_time.length; i++){
-            String[] num = book_time[i];
-            int start = time_change(num[0]);
-            int finish = time_change(num[1])+10;
-            
-            
-            boolean check = false;
-            for(int j = 0; j<time.size(); j++){
-                int end = time.get(j);
-                if(start >= end){
-                    check = true;
-                    //방 시간 갱신.
-                    time.set(j,finish);  
-                    break; 
+        for(int i = 0; i < book_time.length; i++){
+            Collections.sort(room);
+            String[] rook_check = book_time[i];
+            int a = change(rook_check[0]);
+            int b = change(rook_check[1]);
+            if(room.size() == 0){
+                room.add(b);
+                answer++;
+            }else{
+                boolean check = false;
+                for(int j = 0; j < room.size(); j++){
+                    if(room.get(j) <= a ){
+                        room.set(j,(b+10));
+                        check = true;
+                        break;
+                    }
+                }
+                if(!check){
+                    answer++;
+                    room.add(b+10);
                 }
             }
-                
-            if(!check){
-                time.add(finish);
-                room++;
-                }
-            }
-      
-        return room;
+        }
+        return answer;
     }
-    
-    //끝나는 시간을 int형으로 변환.(비교 용이)
-    public static int time_change(String t){
-        String[] num = t.split(":");
-        return Integer.parseInt(num[0]) * 60 + Integer.parseInt(num[1]);
+    static int change (String time){
+        String[] a = time.split(":");
+        return Integer.parseInt(a[0]) * 60 + Integer.parseInt(a[1]);
     }
 }
