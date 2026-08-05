@@ -1,32 +1,39 @@
 import java.util.*;
 class Solution {
+    static Deque<Integer> dq1 = new ArrayDeque<>();
+    static Deque<Integer> dq2 = new ArrayDeque<>();
     public List<Integer> solution(int[] progresses, int[] speeds) {
-        List<Integer> list = new ArrayList<>();
-        Queue<Integer> q = new LinkedList<>();
-        int n = speeds.length;
-        for(int i = 0; i<n; i++){
-            if((100-progresses[i]) % speeds[i] == 0){
-                q.offer((100 - progresses[i]) / speeds[i]);
-            }else{
-                q.offer((100-progresses[i]) / speeds[i] + 1);
-            }
+        List<Integer> answer = new ArrayList<>();
+        for(int i = 0; i < progresses.length; i++){
+            dq1.add(progresses[i]);
+            dq2.add(speeds[i]);
         }
         
-        int day = 1;
-        int now = q.poll();
-        // System.out.println(now);
-        // System.out.println(q);
-        while (!q.isEmpty()){
-            if(now>=q.peek()){
-                day++;
-                q.poll();
-            }else{
-                list.add(day);
-                now = q.poll();
-                day = 1;
+        while(!dq1.isEmpty()){
+            int cnt = 0;
+            int size = dq1.size();
+            for(int i = 0; i < size; i++){
+                int prog = dq1.poll();
+                int speed = dq2.poll();
+                dq1.add(prog+speed);
+                dq2.add(speed);
             }
+            int idx = 0;
+            while(true){
+                if(!dq1.isEmpty() && dq1.peek() >= 100){
+                    dq1.poll();
+                    dq2.poll();
+                    cnt++;
+                }else{
+                    break;
+                }
+            }
+            if(cnt > 0) {
+                answer.add(cnt);
+            }
+          
         }
-        list.add(day);
-        return list;
+        
+        return answer;
     }
 }
