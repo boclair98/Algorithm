@@ -20,7 +20,7 @@ class Solution {
             sb.append(numbers.charAt(idx));
             if(map.containsKey(sb.toString())){
                 num.append(map.get(sb.toString()));
-                sb = new StringBuilder();
+                sb.setLength(0);
             }
             idx++;
         }
