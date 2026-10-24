@@ -21,7 +21,8 @@ class Solution {
         }
         for(int i = 0; i < computers.length; i++){
             for(int j = 0; j < computers.length; j++){
-                if(computers[i][j] == 1 && i!=j){
+                if(i == j) continue;
+                if(computers[i][j] == 1){
                     union(i,j);
                 }
             }
