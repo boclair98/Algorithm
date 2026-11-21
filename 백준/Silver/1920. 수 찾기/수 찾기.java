@@ -1,47 +1,43 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigInteger;
+import javax.imageio.ImageTranscoder;
+import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
+    static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
     static int n,m;
-    static int[] arr;
+    static int[] arr1, arr2;
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        st = new StringTokenizer(br.readLine());
+        BufferedReader br =
+                new BufferedReader(new InputStreamReader(System.in));
+        //st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(br.readLine());
-        arr = new int[n];
+        arr1 = new int[n];
         st = new StringTokenizer(br.readLine());
-        for(int i = 0; i<n; i++){
-            arr[i] = Integer.parseInt(st.nextToken());
+        for(int i = 0; i < n; i++){
+            arr1[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(arr);
+        Arrays.sort(arr1);
         m = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        for(int i = 0; i<m; i++){
-            int check = Integer.parseInt(st.nextToken());
-            if(binary(check)){
-                System.out.println(1);
-            }else{
-                System.out.println(0);
-            }
+        for(int i = 0; i < m; i++){
+            int number = Integer.parseInt(st.nextToken());
+            System.out.println(binarySearch(number));
         }
     }
-    static boolean binary(int num){
+    static int binarySearch(int num){
         int start = 0;
         int end = n - 1;
         while(start<=end){
             int mid = (start + end) / 2;
-            if(arr[mid] == num){
-                return true;
-            }else if(arr[mid] < num){
+            if(arr1[mid] == num) return 1;
+            if(arr1[mid] < num){
                 start = mid + 1;
             }else{
                 end = mid - 1;
             }
-        }
-        return false;
+         }
+        return 0;
     }
 }
