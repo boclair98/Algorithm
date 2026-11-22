@@ -33,9 +33,7 @@ public class Main {
         for(int i = 0; i < line.length(); i++){
             char t = line.charAt(i);
             if(t == 'W'){
-                if(!visited[startX][startY]){
-                    bfs(startX,startY);
-                }
+                bfs(startX,startY);
             }else if(t == 'U'){
                 startX-=1;
                 if(!check(startX,startY)){
