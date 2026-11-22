@@ -23,9 +23,9 @@ public class Main {
         if(total > n ) return;
         if(total == n){
             for(int i = 0; i < list.size(); i++){
-                System.out.print(list.get(i)+" ");
+                sb.append(list.get(i)).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
             return;
         }
         for(int i = idx; i < n; i++){
